@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambodian Wedding Invitation</title>
+    <style>
+        body {
+            font-family: 'Khmer OS', 'Noto Sans Khmer', serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f5dc 0%, #fff8dc 100%);
+            color: #8b4513;
+            overflow-x: hidden;
+        }
+
+        /* Floating petals for sweetness */
+        .petal {
+            position: absolute;
+            width: 15px; /* Smaller on mobile */
+            height: 15px;
+            background: radial-gradient(circle, #ffd700, #ff69b4);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 6s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .petal:nth-child(odd) { animation-delay: -2s; }
+        .petal:nth-child(even) { animation-delay: -4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Section styles */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px; /* Reduced padding for mobile */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* Smoother transition */
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .invitation {
+            width: 95%; /* More width on small screens */
+            max-width: 800px;
+            border: 15px solid #ffd700; /* Thinner border on mobile */
+            border-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxwYXR0ZXJuIGlkPSJmbG9yYWwiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj4KICAgICAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNSIgZmlsbD0iI2ZmZDcwMCIvPgogICAgICA8cGF0aCBkPSJNNTAgNTAgTDYwIDQwIEw3MCA1MCBMNjAgNjAgWiIgZmlsbD0iI2ZmZDcwMCIvPgogICAgPC9wYXR0ZXJuPgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2Zsb3JhbCkiLz4KPC9zdmc+') 15; /* Adjusted for thinner border */
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px; /* Reduced padding */
+            text-align: center;
+            position: relative;
+            animation: fadeInInvitation 2s ease-in-out forwards;
+        }
+
+        .invitation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 215, 0, 0.1) 10px,
+                rgba(255, 215, 0, 0.1) 20px
+            );
+            pointer-events: none;
+            z-index: -1;
+            animation: patternFade 3s ease-in-out;
+        }
+
+        .photos {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px; /* Reduced margin */
+            animation: fadeInPhotos 1.5s ease-in-out 1s forwards;
+        }
+
+        .photo {
+            width: 150px; /* Smaller width for mobile */
+            height: 200px; /* Smaller height */
+            border: 3px solid #ffd700; /* Thinner border */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            opacity: 0; /* Start hidden */
+            animation: slideUp 1s ease-in-out forwards; /* Smoother animation */
+        }
+
+        .photo:nth-child(1) {
+            animation-delay: 1.5s; /* First photo appears after 1.5s */
+        }
+
+        .photo:nth-child(2) {
+            animation-delay: 3s; /* Second photo appears after 3s, giving time for first to show */
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: fadeInImage 1s ease-in-out forwards;
+        }
+
+        .photo:nth-child(1) img {
+            animation-delay: 2s; /* Image fades in after photo container slides up */
+        }
+
+        .photo:nth-child(2) img {
+            animation-delay: 3.5s; /* Image fades in after photo container slides up */
+        }
+
+        .khmer-text {
+            font-size: 20px; /* Smaller font */
+            font-weight: bold;
+            margin: 15px 0;
+            color: #daa520;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInText 1s ease-in-out 4s forwards; /* Delayed to appear after photos */
+        }
+
+        .details {
+            font-size: 16px; /* Smaller font */
+            line-height: 1.6;
+            margin: 15px 0;
+            color: #b8860b;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInText 1s ease-in-out 5s forwards; /* Further delayed */
+        }
+
+        /* Additional sections */
+        .story, .gallery, .details-section {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 10px; /* Reduced margin */
+            padding: 20px; /* Reduced padding */
+            text-align: center;
+            width: 95%; /* Full width on mobile */
+            max-width: 800px;
+        }
+
+        .story h2, .gallery h2, .details-section h2 {
+            color: #daa520;
+            font-size: 24px; /* Smaller font */
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInText 1s ease-in-out forwards; /* Animate on section visibility */
+        }
+
+        .story p {
+            font-size: 18px; /* Smaller font */
+            line-height: 1.8;
+            color: #8b4513;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInText 1s ease-in-out 0.5s forwards; /* Slight delay after h2 */
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller min width */
+            gap: 15px; /* Smaller gap */
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 150px; /* Smaller height */
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out; /* Smoother hover */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s ease-in-out forwards; /* Sequential animation for gallery images */
+        }
+
+        .gallery img:nth-child(1) { animation-delay: 0.5s; }
+        .gallery img:nth-child(2) { animation-delay: 1s; }
+        .gallery img:nth-child(3) { animation-delay: 1.5s; }
+        .gallery img:nth-child(4) { animation-delay: 2s; }
+        .gallery img:nth-child(5) { animation-delay: 2.5s; }
+        .gallery img:nth-child(6) { animation-delay: 3s; }
+        .gallery img:nth-child(7) { animation-delay: 3.5s; }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .details-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .details-section li {
+            font-size: 16px; /* Smaller font */
+            margin: 8px 0;
+            color: #b8860b;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInText 1s ease-in-out forwards; /* Animate each li */
+        }
+
+        .details-section li:nth-child(1) { animation-delay: 0.5s; }
+        .details-section li:nth-child(2) { animation-delay: 1s; }
+        .details-section li:nth-child(3) { animation-delay: 1.5s; }
+        .details-section li:nth-child(4) { animation-delay: 2s; }
+        .details-section li:nth-child(5) { animation-delay: 2.5s; }
+
+        /* Keyframes remain the same but ensure smoothness */
+        @keyframes fadeInInvitation {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInPhotos {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInImage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes patternFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+        }
+
+        .invitation:hover {
+            animation: glow 2s infinite;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            .photos {
+                flex-direction: row; /* Changed to row to show in one row on mobile */
+                justify-content: center; /* Center them in the row */
+                gap: 20px; /* Space between photos */
+            }
+
+            .photo {
+                width: 120px; /* Smaller width to fit side by side on mobile */
+                height: 160px; /* Adjusted height proportionally */
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Even smaller for very small screens */
+            }
+
+            .gallery img {
+                height: 120px;
+            }
+
+            .petal {
+                width: 10px; /* Even smaller petals */
+                height: 10px;
+            }
+
+            section {
+                padding: 10px; /* Minimal padding */
+            }
+
+            .invitation {
+                padding: 15px;
+                border: 10px solid #ffd700; /* Thinner border */
+                border-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxwYXR0ZXJuIGlkPSJmbG9yYWwiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj4KICAgICAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNSIgZmlsbD0iI2ZmZDcwMCIvPgogICAgICA8cGF0aCBkPSJNNTAgNTAgTDYwIDQwIEw3MCA1MCBMNjAgNjAgWiIgZmlsbD0iI2ZmZDcwMCIvPgogICAgPC9wYXR0ZXJuPgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2Zsb3JhbCkiLz4KPC9zdmc+') 10;
+            }
+
+            .story p, .khmer-text, .details {
+                font-size: 14px; /* Smaller text on mobile */
+            }
+
+            .story h2, .gallery h2, .details-section h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating petals for sweetness -->
+    <div class="petal" style="top: 10%; left: 10%;"></div>
+    <div class="petal" style="top: 20%; right: 15%;"></div>
+    <div class="petal" style="top: 50%; left: 20%;"></div>
+    <div class="petal" style="top: 70%; right: 10%;"></div>
+    <div class="petal" style="top: 90%; left: 15%;"></div>
+
+    <!-- Section 1: Invitation -->
+    <section id="invitation-section" class="visible">
+        <div class="invitation">
+            <div class="photos">
+                <div class="photo">
+                    <img src="/img/proz.JPG" alt="Groom">
+                </div>
+                <div class="photo">
+                    <img src="/img/srey.JPG" alt="Bride">
+                </div>
+            </div>
+            <div class="khmer-text">ធៀបការ - Cambodian Wedding Invitation</div>
+            <div class="details">
+                <p>ការ​ប្រារព្ធ​ទទួល​ស្វាគមន៍​អ្នក​ទាំង​អស់​ទៅ​កាន់​ពិធី​ធៀបការ​របស់​យើងខ្ញុំ។</p>
+                <p>កាលបរិច្ឆេទ: 8 មីនា 2026</p>
+                <p>ទីកន្លែង: ភូមិ សួនស្លា</p>
+                <p>ពេលវេលា: 4:00 រសៀល</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Love Story -->
+    <section id="story-section">
+        <div class="story">
+            <h2>Our Love Story</h2>
+            <p>In the heart of Cambodia, our love blossomed like the lotus flower. From the first glance under the Angkor Wat skies, we knew our souls were intertwined. Join us as we celebrate this eternal bond.</p>
+            <p>ការស្រឡាញ់របស់យើងបានចាប់ផ្តើមនៅក្នុងបេះដូងនៃប្រទេសកម្ពុជា។</p>
+        </div>
+    </section>
+
+    <!-- Section 3: Gallery -->
+    <section id="gallery-section">
+        <div class="gallery">
+            <h2>Wedding Moments</h2>
+            <img src="/img/1.JPG" alt="Wedding Photo 1">
+            <img src="/img/2.PNG" alt="Wedding Photo 2">
+            <img src="/img/3.JPG" alt="Wedding Photo 3">
+            <img src="/img/4.JPG" alt="Wedding Photo 4">
+            <img src="/img/5.JPG" alt="Wedding Photo 5">
+            <img src="/img/6.JPG" alt="Wedding Photo 6">
+            <img src="/img/7.JPG" alt="Wedding Photo 7">
+        </div>
+    </section>
+
+    <!-- Section 4: Ceremony Details -->
+    <section id="details-section">
+        <div class="details-section">
+            <h2>Ceremony Details</h2>
+            <ul>
+                <li><strong>កាលបរិច្ឆេទ:</strong> [Date]</li>
+                <li><strong>ទីកន្លែង:</strong> [Venue]</li>
+                <li><strong>ពេលវេលា:</strong> [Time]</li>
+                <li><strong>សម្លៀកបំពាក់:</strong> Traditional Cambodian Attire</li>
+                <li><strong>RSVP:</strong> Please confirm by [RSVP Date]</li>
+            </ul>
+        </div>
+    </section>
+
+    <script>
+        // Intersection Observer for scroll-triggered animations
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Optional: Add confetti on click
+        document.addEventListener('click', function() {
+            // Integrate canvas-confetti if available
+            if (typeof confetti !== 'undefined') {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            }
+        });
+    </script>
+    <!-- Optional: Add canvas-confetti script -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</body>
+</html>
